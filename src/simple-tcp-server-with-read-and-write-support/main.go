@@ -16,7 +16,6 @@ func handleRequest(conn net.Conn) {
 			break
 		}
 
-		conn.Write([]byte(strings.ToUpper(message)))
 		message = strings.Trim(message, "\n")
 
 		if strings.ToLower(message) == "close" || strings.ToLower(message) == "exit" || strings.ToLower(message) == "quit" {
@@ -26,6 +25,7 @@ func handleRequest(conn net.Conn) {
 			conn.Write([]byte("PONG\n"))
 		} else if message != "" {
 			fmt.Printf(">> %s\n", message)
+			conn.Write([]byte(strings.ToUpper(message) + "\n"))
 		}
 	}
 	conn.Close()
